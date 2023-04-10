@@ -20,7 +20,7 @@ private:
   void createSyncStructures();
 
 private:
-  u_int64_t _frameNumber{0};
+  uint64_t _frameNumber{0};
 
   RendererSettings _rendererSettings{};
 

@@ -25,6 +25,10 @@ void VulkanRenderer::Shutdown() {
 
   vkDeviceWaitIdle(_device);
 
+  vkDestroyFence(_device, _renderFence, nullptr);
+  vkDestroySemaphore(_device, _renderSemaphore, nullptr);
+  vkDestroySemaphore(_device, _presentSemaphore, nullptr);
+
   for (auto framebuffer : _framebuffers) {
     vkDestroyFramebuffer(_device, framebuffer, nullptr);
   }
@@ -45,7 +49,7 @@ void VulkanRenderer::Shutdown() {
 }
 
 void VulkanRenderer::RenderFrame() {
-  uint64_t timeout = 0;
+  uint64_t timeout = 1000000000;
   VK_CHECK(vkWaitForFences(_device, 1, &_renderFence, true, timeout));
   VK_CHECK(vkResetFences(_device, 1, &_renderFence));
 
@@ -121,7 +125,7 @@ void VulkanRenderer::initCore() {
   auto builderInstance =
       builder.set_app_name(_rendererSettings.ApplicationName.c_str())
           .request_validation_layers(true)
-          .require_api_version(1, 3, 246)
+          .require_api_version(1, 3, 0)
           .use_default_debug_messenger()
           .build();
 
