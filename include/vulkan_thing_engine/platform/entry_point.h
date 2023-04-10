@@ -1,23 +1,16 @@
 #pragma once
 
-#include <iostream>
 #include <glm/glm.hpp>
-
-#include <vulkan_thing_engine/engine.h>
-#include <vulkan_thing_engine/service_locator.h>
+#include <iostream>
 
 #include <vulkan_thing_engine/platform/game.h>
+#include <vulkan_thing_engine/service_locator.h>
 
-int main(int argc, char** argv){
+int main(int argc, char **argv) {
 
-    auto* _game = CreateGame();
-    VulkanThingEngine::Init();
+  auto *_game = vulkan_thing_engine::CreateGame();
 
-    ServiceLocator::GetWindow()->OpenWindow();
+  _game->Run();
 
-    while (!ServiceLocator::GetWindow()->Update())
-    {
-        /* code */
-    }
-    
+  delete _game;
 }
